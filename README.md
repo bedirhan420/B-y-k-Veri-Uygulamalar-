@@ -1,1 +1,1 @@
-# B-y-k-Veri-Uygulamalar-
+# Büyük-Veri-Uygulamaları
