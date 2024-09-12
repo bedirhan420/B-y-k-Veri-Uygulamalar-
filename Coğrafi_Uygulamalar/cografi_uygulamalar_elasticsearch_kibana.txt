@@ -1,0 +1,652 @@
+elasticsearch / kibana
+
+kurulum: 
+
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+
+sudo apt -y install elasticsearch
+
+sudo apt update
+
+sudo systemctl daemon-reload
+
+sudo systemctl enable elasticsearch
+
+sudo systemctl start elasticsearch
+
+sudo nano /etc/elasticsearch/elasticsearch.yml
+
+port ayarlarını yap 
+
+sudo systemctl restart elasticsearch
+
+sudo afw allow 9200
+
+bitti
+
+sudo apt -y install kibana
+
+sudo apt update
+
+sudo systemctl enable kibana
+
+sudo systemctl start kibana
+
+sudo nano /etc/kibana/kibana.yml
+
+port ayarlarını yap 
+
+sudo systemctl restart kibana
+
+sudo afw allow 5601
+
+bitti
+
+
+uygulama:
+
+134.209.28.142:9200/siteler ile siteler elasticsearchte oluştur
+
+
+Mobaxtermden sunucuya bağlan 
+
+homeun altına jsonu koy
+
+cd ..
+cd home
+sudo apt install python3-venv
+python3 -m venv venv
+source venv/bib/activate
+pip install elasticsearch-loader
+pip install setuptools
+pip install elasticsearch==7.10.1
+elasticsearch_loader --index siteler --type _doc json istanbul_siteler.json
+
+---------------------------------------------
+
+Sorgular İstenilirse python java gibi yazılım dilleriyle bir arayüz üzerinden gerçekleştirilebilir
+ya da direkt postman üzerinden yapılabilir
+
+---------------------------------------------
+
+1. Sorgu : 
+Circle çizdirme ve circle içerisinde kalan pointleri bulma
+
+port:9200/siteler/_search
+
+{
+  "query": {
+    "bool": {
+      "must": {
+      "match_all": {}
+      },
+    "filter": {
+        "geo_distance": {
+          "distance": "700m",
+          "location": {
+            "lon":29.04707908630371,
+            "lat":40.99518838768076
+          }
+        }
+      }
+    }
+  }
+}
+
+Çıktı:
+
+{
+    "took": 4,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 17,
+            "relation": "eq"
+        },
+        "max_score": 1.0,
+        "hits": [
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "ZlNf45EByxCLtEwDeRA1",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Acıbadem Konutları",
+                    "location": {
+                        "lat": 40.997988,
+                        "lon": 29.043203
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "alNf45EByxCLtEwDeRA1",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Konak Acıbadem",
+                    "location": {
+                        "lat": 40.998552,
+                        "lon": 29.04836
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "xVNf45EByxCLtEwDeRA1",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Emek Sitesi",
+                    "location": {
+                        "lat": 41.000729,
+                        "lon": 29.047297
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "xlNf45EByxCLtEwDeRA1",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Tufan Sitesi",
+                    "location": {
+                        "lat": 40.999091,
+                        "lon": 29.045887
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "zVNf45EByxCLtEwDeRA1",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Polat Sitesi",
+                    "location": {
+                        "lat": 40.997081,
+                        "lon": 29.040187
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "4VNf45EByxCLtEwDeRA1",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Anıt Sitesi",
+                    "location": {
+                        "lat": 40.989585,
+                        "lon": 29.046525
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "CVNf45EByxCLtEwDeRE1",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Anka Evim Kadıköy",
+                    "location": {
+                        "lat": 40.995876,
+                        "lon": 29.052755
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "LFNf45EByxCLtEwDeRE1",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Acıbadem Konutları",
+                    "location": {
+                        "lat": 40.998598,
+                        "lon": 29.042551
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "LVNf45EByxCLtEwDeRE1",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Demircan Sitesi",
+                    "location": {
+                        "lat": 41.000314,
+                        "lon": 29.047996
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "NlNf45EByxCLtEwDeRE1",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Denizciler Sitesi",
+                    "location": {
+                        "lat": 40.999705,
+                        "lon": 29.045082
+                    }
+                }
+            }
+        ]
+    }
+}
+
+
+----------------------------------------------
+2. Sorgu :
+Verilen bir point'e en yakın pointlerden başlayarak sıralama
+
+bulunan hepsi:
+port:9200/siteler/_search
+
+bulunan x tanesi:
+port:9200/siteler/_search?size=x
+ 
+
+
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      }
+    }
+  },
+  "sort": [
+    {
+      "_geo_distance": {
+        "location": {
+            "lon":29.04707908630371,
+            "lat":40.99518838768076
+        },
+        "order": "asc",
+        "unit": "km",
+        "distance_type": "plane"
+      }
+    }
+  ]
+}
+
+Çıktı:
+
+{
+    "took": 13,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 10000,
+            "relation": "gte"
+        },
+        "max_score": null,
+        "hits": [
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "PlNf45EByxCLtEwDeRA0",
+                "_score": null,
+                "_source": {
+                    "stitle": "Marmara Palas",
+                    "location": {
+                        "lat": 40.986915,
+                        "lon": 29.050057
+                    }
+                },
+                "sort": [
+                    254.59699752543543
+                ]
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "Q1Nf45EByxCLtEwDeRA1",
+                "_score": null,
+                "_source": {
+                    "stitle": "Alara Konutları",
+                    "location": {
+                        "lat": 40.987725,
+                        "lon": 29.050395
+                    }
+                },
+                "sort": [
+                    259.4340615486358
+                ]
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "NVNf45EByxCLtEwDeRE1",
+                "_score": null,
+                "_source": {
+                    "stitle": "Güvener Suites",
+                    "location": {
+                        "lat": 40.983772,
+                        "lon": 29.051415
+                    }
+                },
+                "sort": [
+                    335.35889466636246
+                ]
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "gFNf45EByxCLtEwDeRE1",
+                "_score": null,
+                "_source": {
+                    "stitle": "Koru Sitesi",
+                    "location": {
+                        "lat": 40.987373,
+                        "lon": 29.049158
+                    }
+                },
+                "sort": [
+                    339.67793580885467
+                ]
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "OFNf45EByxCLtEwDeRA0",
+                "_score": null,
+                "_source": {
+                    "stitle": "Kuyubaşı Konutları",
+                    "location": {
+                        "lat": 40.986728,
+                        "lon": 29.048526
+                    }
+                },
+                "sort": [
+                    380.05442099687656
+                ]
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "2VNf45EByxCLtEwDeRA1",
+                "_score": null,
+                "_source": {
+                    "stitle": "Kilercibaşı Konutları",
+                    "location": {
+                        "lat": 40.983675,
+                        "lon": 29.050175
+                    }
+                },
+                "sort": [
+                    398.1445392901796
+                ]
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "UVNf45EByxCLtEwDeRE1",
+                "_score": null,
+                "_source": {
+                    "stitle": "Yıldırım Sitesi",
+                    "location": {
+                        "lat": 40.98783,
+                        "lon": 29.048535
+                    }
+                },
+                "sort": [
+                    405.4729718170806
+                ]
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "jVNf45EByxCLtEwDeRE1",
+                "_score": null,
+                "_source": {
+                    "stitle": "1071 Kadıköy",
+                    "location": {
+                        "lat": 40.990913,
+                        "lon": 29.053122
+                    }
+                },
+                "sort": [
+                    487.9403073416906
+                ]
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "21Nf45EByxCLtEwDeRA1",
+                "_score": null,
+                "_source": {
+                    "stitle": "Sevgili Korupark",
+                    "location": {
+                        "lat": 40.983417,
+                        "lon": 29.048751
+                    }
+                },
+                "sort": [
+                    499.4222288517489
+                ]
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "oFNf45EByxCLtEwDeRE1",
+                "_score": null,
+                "_source": {
+                    "stitle": "1071 Kadıköy",
+                    "location": {
+                        "lat": 40.991131,
+                        "lon": 29.052218
+                    }
+                },
+                "sort": [
+                    516.8286736357345
+                ]
+            }
+        ]
+    }
+}
+
+------------------------------------------------
+
+3. Sorgu :
+Çizilen bir boundary içerisinde kalan pointleri bulma
+
+port:9200/siteler/_search
+
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": {
+        "geo_bounding_box": {
+          "location": {
+            "top_left": {
+              "lat": 40.90053886975936,
+              "lon": 40.91069101159384
+            },
+            "bottom_right": {
+              "lat": 29.163122177124023,
+              "lon": 29.18509483337402
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+Çıktı:
+
+{
+    "took": 4,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "skipped": 0,
+        "failed": 0
+    },
+    "hits": {
+        "total": {
+            "value": 41,
+            "relation": "eq"
+        },
+        "max_score": 1.0,
+        "hits": [
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "kFNf45EByxCLtEwDdwPN",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Güneş Sitesi",
+                    "location": {
+                        "lat": 40.896998,
+                        "lon": 29.182
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "llNf45EByxCLtEwDdwPN",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Özenel Sitesi",
+                    "location": {
+                        "lat": 40.899933,
+                        "lon": 29.178307
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "l1Nf45EByxCLtEwDdwPN",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Yeni Aykent Sitesi",
+                    "location": {
+                        "lat": 40.899385,
+                        "lon": 29.178686
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "1VNf45EByxCLtEwDdwPN",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Feriha Özyuva Sitesi",
+                    "location": {
+                        "lat": 40.900035,
+                        "lon": 29.166716
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "11Nf45EByxCLtEwDdwPN",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Özbey Sitesi",
+                    "location": {
+                        "lat": 40.900071,
+                        "lon": 29.166386
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "2FNf45EByxCLtEwDdwPN",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Mesa Sahill 223",
+                    "location": {
+                        "lat": 40.893992,
+                        "lon": 29.174244
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "3VNf45EByxCLtEwDdwPN",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Arzum Sitesi",
+                    "location": {
+                        "lat": 40.900333,
+                        "lon": 29.176976
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "3lNf45EByxCLtEwDdwPN",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Sezin Sitesi",
+                    "location": {
+                        "lat": 40.898613,
+                        "lon": 29.167675
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "4VNf45EByxCLtEwDdwPN",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Mesa Sahill 224",
+                    "location": {
+                        "lat": 40.893265,
+                        "lon": 29.175186
+                    }
+                }
+            },
+            {
+                "_index": "siteler",
+                "_type": "_doc",
+                "_id": "5FNf45EByxCLtEwDdwPN",
+                "_score": 1.0,
+                "_source": {
+                    "stitle": "Royal Towers",
+                    "location": {
+                        "lat": 40.897869,
+                        "lon": 29.169679
+                    }
+                }
+            }
+        ]
+    }
+}
+------------------------------------------------
+
+
+
+
