@@ -1,0 +1,54 @@
+DWH Proje
+RDB to NoSQL
+
+Postgre SQL in cloud ortamındaki makineye indirilmesi
+
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+sudo systemctl status postgresql
+
+DBeaver bilgisayarımızdan cloud ortamındaki sqle kolayca erişmek için bir araç
+bunu indirelim
+
+host için cloud ip yi girelim
+
+hata çözümü firewall ayarları
+
+ufw allow 5432/tcp
+sudo systemctl restart postgresql
+
+cd ..
+cd etc
+cd postgresql
+cd main
+nano postgresql.conf
+connection settingsten listen_adresses = "*"
+sudosystem ctl restart postgresql
+
+nano pg_hba.conf
+host all all 0.0.0.0 md5
+sudosystem ctl restart postgresql
+
+password tanımlama:
+su postgres
+psql
+\password postgres => şifre gir 
+su root
+sudosystem ctl restart PostgreSQL
+
+DBeaver üzerinden
+
+showalldatabasesı seçtik
+
+scripte gelip
+
+create database dwh;
+
+dwh -> Schemas -> public -> Tables -> sağtık import data -> havaleişlem.csv
+
+select * from havaleislem_csv
+ 
+
+
+
+
