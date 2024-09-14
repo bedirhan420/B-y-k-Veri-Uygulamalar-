@@ -1,0 +1,95 @@
+elastic search click counts
+
+ip:9200/clickevent/_search
+
+{
+    "size":0,
+    "aggs":{
+        "clickagg":{
+            "terms":{
+                "field":"click.keyword"
+            }
+        }
+    }
+}
+
+Çıktı:
+
+{
+  "hits": {
+    "total": 10000
+  },
+  "aggregations": {
+    "clickagg": {
+      "buckets": [
+        { "key": "Satın Al", "doc_count": 1234 },
+        { "key": "Sepete Ekle", "doc_count": 1045 },
+        { "key": "Ürünü İncele", "doc_count": 875 },
+        { "key": "Yorumları Oku", "doc_count": 999 },
+        { "key": "Favorilere Ekle", "doc_count": 456 },
+        { "key": "Karşılaştır", "doc_count": 789 },
+        { "key": "İndirimi Gör", "doc_count": 542 },
+        { "key": "Hediye Paketi Seç", "doc_count": 321 },
+        { "key": "Kampanyaları Gör", "doc_count": 678 },
+        { "key": "Mağaza Bilgisi", "doc_count": 432 },
+        { "key": "Detayları Gör", "doc_count": 729 }
+      ]
+    }
+  }
+}
+
+
+----------------------------------------------------------------------
+
+belirli bir iteme tıklayan kişileri görme
+
+ip:9200/clickevent/_search
+
+{
+    "query":{
+        "match":{
+            "click":{
+                "query":"Kampanyaları Gör"
+            }
+        }
+    }
+}
+
+
+Çıktı:
+
+{
+  "hits": {
+    "total": 678 ,
+    "hits": [
+      {
+        "_source": {
+          "deviceID": "550e8400-e29b-41d4-a716-446655440000",
+          "clickedButton": "Kampanyaları Gör",
+          "session": "sess1",
+          "timestamp": "2024-09-14T08:45:10Z",
+          "region": "İstanbul"
+        }
+      },
+      {
+        "_source": {
+          "deviceID": "c9bf9e57-1685-4c89-bafb-ff5af830be8a",
+          "clickedButton": "Kampanyaları Gör",
+          "session": "sess2",
+          "timestamp": "2024-09-14T09:10:05Z",
+          "region": "Ankara"
+        }
+      },
+      {
+        "_source": {
+          "deviceID": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+          "clickedButton": "Kampanyaları Gör",
+          "session": "sess3",
+          "timestamp": "2024-09-14T09:15:20Z",
+          "region": "İzmir"
+        }
+      }
+    ]
+  }
+}
+
