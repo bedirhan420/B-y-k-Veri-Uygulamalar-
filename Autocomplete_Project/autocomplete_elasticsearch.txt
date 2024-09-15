@@ -1,0 +1,64 @@
+Auto complete
+
+PUT ip:9200/autocompletetest
+
+{
+    "settings":{
+        "analysis":{
+            "filter ":{
+                "autocomplete_filter":{
+                    "type":"edge_ngram",
+                    "min_gram":2,
+                    "max_gram":8
+                }
+            },
+            "analyzer":{
+                "autocomplete":{
+                    "type":"custom",
+                    "tokenizer":"standard",
+                    "filter":[
+                        "lowercase",
+                        "autocomplete_filter"
+                    ]
+                }
+            }
+        }
+    },
+    "mappings":{
+        "properties":{
+            "title":{
+                "type":"text",
+                "analyzer":"autocomplete",
+                "search_analyzer":"standard"
+            }
+        }
+    }
+}
+
+autocompletetest oluşturulur
+-----------------------------------------------------------------
+
+POST ip:9200/autocompletetest/_doc/1
+
+
+{
+    "title":"iphone7"
+}
+
+şeklinde tek tek datalar eklenebilir
+
+-------------------------------------------------------------------
+
+POST ip:9200/autocompletetest/_search
+
+{
+    "query":{
+        "match":{
+            "title":{
+                "query":"iph"
+            }
+        }
+    }
+}
+
+şeklinde test edilebilir sonuç "iphone7"
